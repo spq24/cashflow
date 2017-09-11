@@ -13,7 +13,7 @@ gem 'devise'
 gem 'figaro'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'plaid-ruby'
+gem 'plaid'
 gem 'csv-importer'
 
 
