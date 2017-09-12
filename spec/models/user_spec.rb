@@ -20,13 +20,32 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it "should have a valid factory" do
-  	expect(build(:user)).to be_valid
-  end
+	it "should have a valid factory" do
+		expect(build(:user)).to be_valid
+	end
 
-  it { should have_many :categories }
-  it { should have_many :sub_categories }
-  it { should have_many :transactions }
-  it { should validate_presence_of :email }
-  it { should validate_presence_of :password }
+	describe User do
+		before { @user = create(:user) }
+
+		it { should have_many :categories }
+		it { should have_many :sub_categories }
+		it { should have_many :transactions }
+		it { should validate_presence_of :email }
+		it { should validate_presence_of :password }
+		it { should validate_uniqueness_of :auth_token }
+
+	  	context "#generate_authentication_token!" do
+		    it "generates a unique token" do
+		      Devise.stub(:friendly_token).and_return("auniquetoken123")
+		      @user.generate_authentication_token!
+		      expect(@user.auth_token).to eq "auniquetoken123"
+		    end
+
+		    it "generates another token when one already has been taken" do
+		      existing_user = create(:user, auth_token: "auniquetoken123")
+		      @user.generate_authentication_token!
+		      expect(@user.auth_token).not_to eq existing_user.auth_token
+		    end
+	  	end
+	end
 end
