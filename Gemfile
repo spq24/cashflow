@@ -15,7 +15,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'plaid'
 gem 'csv-importer'
-gem 'react-rails'
+gem 'webpacker'
 
 
 group :production do

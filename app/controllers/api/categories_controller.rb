@@ -4,6 +4,7 @@ class Api::CategoriesController < Api::BaseController
 	respond_to :json
 
 	def create
+		binding.pry
 		category = Category.new(category_params)
 		if category.save
 			render json: category, status: 200, location: [:api, category]
