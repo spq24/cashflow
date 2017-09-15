@@ -1,5 +1,5 @@
 class Api::TransactionsController < Api::BaseController
-	before_action :authenticate_with_token!
+	#before_action :authenticate_with_token!
 	before_action :set_transaction, only: [:show, :update, :destroy]
 	respond_to :json
 
@@ -17,7 +17,9 @@ class Api::TransactionsController < Api::BaseController
 	end
 
 	def index
-		render json: { total_results: Transaction.all.pluck(:id).count, transactions: Transaction.all }, status: 200
+		transactions = []
+		Transaction.all.map { |t| transactions << {id: t.id, description: t.description, formatted_amount: Money.new(t.amount_in_cents, "USD").format, amount_in_cents: t.amount_in_cents, user_id: t.user_id, user_name: t.user_full_name}}
+		render json: { total_results: transactions.count, transactions: transactions }, status: 200
 	end
 
 	def update
@@ -39,7 +41,7 @@ class Api::TransactionsController < Api::BaseController
 	private
 
 		def transaction_params
-			params.require().permit(:description, :amount_in_cents, :debit, :credit, :notes, :user_id, :date_recorded, :category_id)
+			params.require(:transaction).permit(:description, :amount_in_cents, :debit, :credit, :notes, :user_id, :date_recorded, :category_id)
 		end
 
 		def set_transaction

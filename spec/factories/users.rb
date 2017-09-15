@@ -15,12 +15,15 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  first_name             :string           default("")
+#  last_name              :string           default("")
+#  auth_token             :string           default("")
 #
 
 FactoryGirl.define do
   factory :user do
-   # first_name { Faker::Name.first_name  }
-   # last_name { Faker::Name.last_name  }
+    first_name { Faker::Name.first_name  }
+    last_name { Faker::Name.last_name  }
     email { Faker::Internet.email  }
    # phone { Faker::PhoneNumber.phone_number }
     password { Faker::Internet.password(8) }

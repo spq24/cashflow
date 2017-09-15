@@ -27,4 +27,17 @@ RSpec.describe Transaction, type: :model do
   it { should validate_presence_of :description }
   it { should validate_presence_of :amount_in_cents }
   it { should validate_presence_of :date_recorded }
+
+  context "#user_full_name" do
+  	it "returns the full name of the user if present" do
+  		user = create(:user)
+  		transaction = create(:transaction, user_id: user.id)
+  		expect(transaction.user_full_name).to eq user.full_name
+  	end
+
+  	it "returns an empty string if there is no associated user" do
+  		transaction = create(:transaction)
+  		expect(transaction.user_full_name).to eq ""
+  	end
+  end
 end

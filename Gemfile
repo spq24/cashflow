@@ -16,7 +16,8 @@ gem 'delayed_job_active_record'
 gem 'plaid'
 gem 'csv-importer'
 gem 'webpacker'
-
+gem 'rack-cors', :require => 'rack/cors'
+gem 'money-rails'
 
 group :production do
   gem 'puma', '~> 3.0'

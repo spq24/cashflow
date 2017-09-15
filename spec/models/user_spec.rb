@@ -15,6 +15,9 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  first_name             :string           default("")
+#  last_name              :string           default("")
+#  auth_token             :string           default("")
 #
 
 require 'rails_helper'
@@ -46,6 +49,13 @@ RSpec.describe User, type: :model do
 		      @user.generate_authentication_token!
 		      expect(@user.auth_token).not_to eq existing_user.auth_token
 		    end
+	  	end
+
+	  	context "#full_name" do
+	  		it "returns the full name of the user" do
+	  			user = create(:user, first_name: "Steve", last_name: "Quatrani")
+	  			expect(user.full_name).to eq "Steve Quatrani"
+	  		end
 	  	end
 	end
 end

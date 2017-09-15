@@ -20,4 +20,9 @@ class Transaction < ApplicationRecord
   belongs_to :category
 
   validates :description, :amount_in_cents, :date_recorded, presence: true
+
+  def user_full_name
+  	user.present? ? user.full_name : ""
+  end
+
 end
